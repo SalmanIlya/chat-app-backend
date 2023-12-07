@@ -33,7 +33,37 @@ const updateUser = async (req, res) => {
     console.log(err);
   }
 };
+const GetSingleUser=async(req,res)=>{
+    try{
+        const id=req.params.id
+const user=await User.findById(id)
+res.status(202).json(user)
 
+    }catch(err){
+        res.status(404).json({
+            massage: "error",
+            err,
+          });
+          console.log(err);
+        } 
+    
+}
+
+const getAllUser=async(req,res)=>{
+    try{
+        const user=await User.find()
+        res.status(202).json(user)
+
+
+    }catch(err){
+        res.status(202).json({
+            massage:"users not found",err
+        })
+
+    }
+} 
 module.exports = {
   updateUser,
+  GetSingleUser,
+  getAllUser
 };

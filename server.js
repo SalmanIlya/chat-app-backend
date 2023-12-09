@@ -16,8 +16,18 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({ extended: true }));
 const server=http.createServer(app)
 const  io=socketIO(server)
-io.on('connection', () => {
+io.on('connection', (socket) => {
+
     console.log('a user connected');
+socket.on("joined",({User})=>{
+  console.log(User.UserName,"is join");
+})
+socket.on("message",({message})=>{
+  console.log(message);
+})
+socket.on("disconnected",()=>{
+  console.log("user leave");
+})
   });
 app.use("/api",Routes)
 server.listen(port,()=>{

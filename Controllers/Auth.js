@@ -20,6 +20,13 @@ const createUser = async (req, res) => {
   });
 
   try {
+    const users=await User.findOne({Email})
+    if(users){
+      res.status(404).json({message:"User already exist"});
+
+    }else{
+
+    
     await newUser
       .save()
       .then((data) => {
@@ -30,7 +37,7 @@ const createUser = async (req, res) => {
         console.log("Error occurred while creating a user.");
         console.log(err);
         res.status(404).json("error");
-      });
+      });}
   } catch (error) {
     console.log("Error", error);
   }
